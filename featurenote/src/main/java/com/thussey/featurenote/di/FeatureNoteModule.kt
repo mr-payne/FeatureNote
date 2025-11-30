@@ -1,5 +1,6 @@
 package com.thussey.featurenote.di
 
+import com.thussey.featurenote.feature_note.data.data_source.NotesApi
 import com.thussey.featurenote.feature_note.data.repository.NoteNetworkRepositoryImpl
 import com.thussey.featurenote.feature_note.data.repository.NoteRepositoryImpl
 import com.thussey.featurenote.feature_note.domain.repository.NoteNetworkRepository
@@ -15,16 +16,34 @@ import com.thussey.featurenote.feature_note.domain.use_case.network.GetNoteUseCa
 import com.thussey.featurenote.feature_note.domain.use_case.network.GetNotesUseCase
 import com.thussey.featurenote.feature_note.domain.use_case.network.NoteUseCases
 import com.thussey.notesdb.data_source.NoteDatabase
-import com.thussey.notesnetwork.data.data_source.NotesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
+import kotlin.jvm.java
 
 @Module
 @InstallIn(SingletonComponent::class)
 object FeatureNoteModule {
+
+    @Provides
+    @Singleton // Or another scope if needed
+    fun provideNotesApi(
+        @Named("NotesApiBaseUrl") baseUrl: String,
+        okHttpClient: OkHttpClient
+    ): NotesApi {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NotesApi::class.java)
+    }
 
     @Provides
     @Singleton

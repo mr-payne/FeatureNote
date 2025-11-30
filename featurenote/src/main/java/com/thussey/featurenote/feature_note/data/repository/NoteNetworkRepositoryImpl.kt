@@ -1,7 +1,7 @@
 package com.thussey.featurenote.feature_note.data.repository
 
+import com.thussey.featurenote.feature_note.data.data_source.NotesApi
 import com.thussey.featurenote.feature_note.domain.repository.NoteNetworkRepository
-import com.thussey.notesnetwork.data.data_source.NotesApi
 import com.thussey.notesnetwork.domain.model.network.createNote.CreateUpdateRequest
 import com.thussey.notesnetwork.domain.model.network.createNote.CreateUpdateResponse
 import com.thussey.notesnetwork.domain.model.network.getNotes.GetNotesResponse
